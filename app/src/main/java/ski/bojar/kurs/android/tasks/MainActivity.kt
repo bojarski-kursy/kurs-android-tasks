@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,7 +18,21 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyColumn()
+            //MyColumn()
+            MyRow()
+        }
+    }
+
+    @Composable
+    fun MyRow() {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = Alignment.Bottom, // Top, CenterVertically, Bottom
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Text(text = "Witaj Androidzie!")
+            Text(text = "Witaj ponownie!")
+            Text(text = "Hej, co u Ciebie?")
         }
     }
 
