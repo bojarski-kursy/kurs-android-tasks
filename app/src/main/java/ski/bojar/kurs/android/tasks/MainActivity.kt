@@ -19,7 +19,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //MyColumn()
-            MyRow()
+            //MyRow()
+            MyColumnExercise()
+        }
+    }
+
+    @Composable
+    fun MyColumnExercise() {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(text = "Witaj Androidzie!")
+            Text(text = "Witaj ponownie!")
+            Text(text = "Hej, co u Ciebie?")
         }
     }
 
@@ -39,7 +53,9 @@ class MainActivity : ComponentActivity() {
     @Composable
     fun MyColumn() {
         Column(
-            modifier = Modifier.background(Color.LightGray).fillMaxSize(),
+            modifier = Modifier
+                .background(Color.LightGray)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.Start, // Start, CenterHorizontally, End
             verticalArrangement = Arrangement.Bottom
         ) {
