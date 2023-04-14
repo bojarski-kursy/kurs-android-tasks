@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +25,33 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyModifier()
+//            MyModifier()
+            MyModifierExercise()
+        }
+    }
+
+    @Composable
+    fun MyModifierExercise() {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.DarkGray),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Top",
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .background(Color.Gray)
+            )
+            Text(
+                text = "Bottom",
+                modifier = Modifier
+                    .border(width = 2.dp, color = Color.White, shape = CircleShape)
+                    .background(color = Color.LightGray, shape = CircleShape)
+                    .padding(10.dp)
+            )
         }
     }
 
