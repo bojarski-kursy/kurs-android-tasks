@@ -19,15 +19,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            MyModifier()
-            MyModifierExercise()
+            MyText()
         }
+    }
+
+    @Composable
+    fun MyText() {
+        Text(
+            text = "Piszę sobie własny tekst w Text i będę go stylować!",
+            fontSize = 20.sp,
+            color = Color.Red,
+            fontWeight = FontWeight.Bold,
+            fontStyle = FontStyle.Italic,
+            textDecoration = TextDecoration.Underline,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.background(Color.Yellow)
+        )
     }
 
     @Composable
