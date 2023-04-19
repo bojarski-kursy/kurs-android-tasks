@@ -9,8 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -21,6 +24,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -30,7 +34,40 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyText()
+            //MyText()
+            MyTextAlign()
+        }
+    }
+
+    @Composable
+    fun MyTextAlign() {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            //horizontalAlignment = Alignment.End
+        ) {
+            Text(
+                text = "Text1",
+                modifier = Modifier
+                    .background(Color.Green)
+                    .align(Alignment.End)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.End
+            )
+            Text(
+                text = "Text2",
+                modifier = Modifier
+                    .background(Color.Yellow)
+                    .align(Alignment.CenterHorizontally)
+            )
+            Text(
+                text = "Text3",
+                modifier = Modifier
+                    .background(Color.Red)
+                    .align(Alignment.Start)
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .wrapContentSize()
+            )
         }
     }
 
