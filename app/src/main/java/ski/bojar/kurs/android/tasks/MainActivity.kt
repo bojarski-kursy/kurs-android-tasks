@@ -8,6 +8,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,7 +42,25 @@ class MainActivity : ComponentActivity() {
         setContent {
             //MyText()
             //MyTextAlign()
-            MyIcon()
+            //MyIcon()
+            MySpacer()
+        }
+    }
+    
+    @Composable
+    fun MySpacer() {
+        Column() {
+            Text(
+                text = "Jestem wyżej",
+//                modifier = Modifier.padding(bottom = 20.dp)
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(20.dp)
+                    .fillMaxWidth()
+                    .background(Color.Gray)
+            )
+            Text(text = "A ja niżej")
         }
     }
 
