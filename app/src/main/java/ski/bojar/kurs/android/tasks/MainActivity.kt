@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,7 +44,20 @@ class MainActivity : ComponentActivity() {
             //MyText()
             //MyTextAlign()
             //MyIcon()
-            MySpacer()
+            //MySpacer()
+            MyDivider()
+        }
+    }
+
+    @Composable
+    fun MyDivider() {
+        Column {
+            Text(text = "Jestem wyżej")
+            Divider(
+                color = Color.Red,
+                thickness = 5.dp
+            )
+            Text(text = "A ja niżej")
         }
     }
     
