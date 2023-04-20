@@ -21,8 +21,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -45,7 +47,24 @@ class MainActivity : ComponentActivity() {
             //MyTextAlign()
             //MyIcon()
             //MySpacer()
-            MyDivider()
+            //MyDivider()
+            MyProgress()
+        }
+    }
+
+    @Composable
+    fun MyProgress() {
+        Column(modifier = Modifier.padding(10.dp)) {
+            CircularProgressIndicator(color = Color.Green)
+            CircularProgressIndicator(progress = 0.8f)
+
+            LinearProgressIndicator(
+                color = Color.Green,
+                modifier = Modifier.fillMaxWidth(),
+                trackColor = Color.Red
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            LinearProgressIndicator(progress = 0.8f)
         }
     }
 
