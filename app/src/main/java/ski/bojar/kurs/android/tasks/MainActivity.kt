@@ -16,6 +16,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +40,27 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //MyText()
-            MyTextAlign()
+            //MyTextAlign()
+            MyIcon()
+        }
+    }
+
+    @Composable
+    fun MyIcon() {
+        Column() {
+            Icon(imageVector = Icons.Default.Email, contentDescription = "email icon")
+            Icon(imageVector = Icons.Outlined.Email, contentDescription = "email icon")
+            Icon(imageVector = Icons.Default.Done, contentDescription = "done icon", tint = Color.Green)
+
+            Icon(
+                imageVector = Icons.Default.Done,
+                contentDescription = "done icon",
+                tint = Color.White,
+                modifier = Modifier
+                    .background(Color.Green, CircleShape)
+                    .border(1.dp, Color.LightGray, CircleShape)
+                    .padding(4.dp)
+            )
         }
     }
 
