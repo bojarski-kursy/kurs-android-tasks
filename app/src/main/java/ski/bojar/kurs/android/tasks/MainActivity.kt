@@ -48,7 +48,37 @@ class MainActivity : ComponentActivity() {
             //MyIcon()
             //MySpacer()
             //MyDivider()
-            MyProgress()
+            //MyProgress()
+            MyTextDividerProgressExercise()
+        }
+    }
+
+    @Composable
+    fun MyTextDividerProgressExercise() {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Witaj!",
+                color = Color.White,
+                fontSize = 50.sp,
+                fontWeight = FontWeight.Thin,
+                textAlign = TextAlign.End,
+                modifier = Modifier
+                    .background(Color.Gray)
+                    .fillMaxWidth()
+            )
+            Divider()
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+            Divider()
+            Text(
+                text = "Fajny ten Twój progress! ;)",
+                color = Color.Blue,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 
