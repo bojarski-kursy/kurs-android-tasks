@@ -26,6 +26,8 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -51,7 +53,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MySurface()
+            //MySurface()
+            MyCard()
+        }
+    }
+
+    @Composable
+    fun MyCard() {
+        Card(
+            modifier = Modifier.padding(20.dp),
+            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 8.dp),
+            colors = CardDefaults.cardColors()
+        ) {
+            Text(
+                text = "Card",
+                modifier = Modifier.padding(10.dp)
+            )
         }
     }
 
