@@ -7,6 +7,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
@@ -54,7 +56,51 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //MySurface()
-            MyCard()
+            //MyCard()
+            MyBox()
+        }
+    }
+
+    @Composable
+    fun MyBox() {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.LightGray),
+            //contentAlignment = Alignment.BottomEnd
+        ) {
+            Text(text = "Box1", modifier = Modifier.align(Alignment.BottomEnd))
+            Text(text = "Box2", modifier = Modifier.align(Alignment.TopCenter))
+            Text(text = "Box3", modifier = Modifier.align(Alignment.BottomStart))
+
+            Box(
+                modifier = Modifier
+                    .size(150.dp)
+                    .border(1.dp, Color.Black, RoundedCornerShape(8.dp))
+                    .align(Alignment.Center)
+                    .padding(10.dp)
+            ) {
+                Spacer(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Magenta, RoundedCornerShape(8.dp))
+                        .align(Alignment.TopStart)
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .size(50.dp)
+                        .background(Color.Magenta, RoundedCornerShape(8.dp))
+                        .align(Alignment.BottomEnd)
+                )
+
+                Spacer(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .background(Color.Red, RoundedCornerShape(8.dp))
+                        .align(Alignment.Center)
+                )
+            }
         }
     }
 
