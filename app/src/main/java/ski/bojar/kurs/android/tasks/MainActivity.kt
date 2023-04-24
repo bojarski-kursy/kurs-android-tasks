@@ -3,10 +3,12 @@ package ski.bojar.kurs.android.tasks
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,14 +20,19 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,13 +50,44 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //MyText()
-            //MyTextAlign()
-            //MyIcon()
-            //MySpacer()
-            //MyDivider()
-            //MyProgress()
-            MyTextDividerProgressExercise()
+            MyButton()
+        }
+    }
+    
+    @Composable
+    fun MyButton() {
+        Column() {
+            Button(onClick = { }) {
+                Text(text = "Button")
+            }
+
+            Button(
+                onClick = {},
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.LightGray,
+                    contentColor = Color.DarkGray
+                ),
+                shape = RoundedCornerShape(8.dp),
+                border = BorderStroke(1.dp, Color.DarkGray),
+                contentPadding = PaddingValues(30.dp),
+                modifier = Modifier.padding(10.dp),
+                enabled = false
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(imageVector = Icons.Default.Add, contentDescription = null)
+                    Text(text = "Add")
+                }
+            }
+            
+            OutlinedButton(onClick = {}) {
+                Text(text = "Outlined Button")
+            }
+
+            TextButton(onClick = { }) {
+                Text(text = "Text Button")
+            }
         }
     }
 
