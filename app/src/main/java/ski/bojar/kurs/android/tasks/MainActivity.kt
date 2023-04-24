@@ -31,6 +31,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -50,7 +51,22 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyButton()
+            MySurface()
+        }
+    }
+
+    @Composable
+    fun MySurface() {
+        Surface(
+            contentColor = Color.Blue,
+            color = Color.Green,
+            border = BorderStroke(2.dp, Color.Red),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Text(
+                text = "Surface",
+                modifier = Modifier.padding(10.dp)
+            )
         }
     }
     
