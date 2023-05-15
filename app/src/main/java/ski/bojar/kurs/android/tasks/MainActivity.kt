@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -55,10 +56,35 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //MySurface()
-            //MyCard()
-            //MyBox()
-            MyLayoutWeight()
+            //MyMusicPlayerView()
+        }
+    }
+
+    @Composable
+    fun MyMusicPlayerView() {
+        Column() {
+            Row() {
+                Icon(
+                    imageVector = Icons.Outlined.PlayArrow,
+                    contentDescription = "play music icon",
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .padding(horizontal = 8.dp)
+                        .border(2.dp, Color.Black, CircleShape)
+                )
+                Column() {
+                    Text(text = "We Are the Champions", fontWeight = FontWeight.Bold)
+                    Text(text = "Queen")
+                    Text(text = "News of the World", fontWeight = FontWeight.Light, color = Color.Gray)
+                }
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                LinearProgressIndicator(
+                    progress = 0.7f,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+                Text(text = "2:16")
+            }
         }
     }
 
