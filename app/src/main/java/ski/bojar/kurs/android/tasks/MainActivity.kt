@@ -63,7 +63,39 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyClickButton()
+            //MyClickButton()
+            MyNumberCounterButtonExercise()
+        }
+    }
+    
+    @Composable
+    fun MyNumberCounterButtonExercise() {
+        var number by remember { mutableStateOf(0) }
+
+        Row() {
+            Button(
+                onClick = { number-- },
+                modifier = Modifier.size(30.dp),
+                contentPadding = PaddingValues(2.dp),
+                enabled = number > 0  //if (number > 0) true else false
+            ) {
+                Text(text = "-")
+            }
+            Text(
+                text = "$number",
+                modifier = Modifier
+                    .size(height = 30.dp, width = 50.dp)
+                    .padding(horizontal = 4.dp)
+                    .border(1.dp, Color.Gray)
+                    .wrapContentSize()
+            )
+            Button(
+                onClick = { number++ },
+                modifier = Modifier.size(30.dp),
+                contentPadding = PaddingValues(2.dp)
+            ) {
+                Text(text = "+")
+            }
         }
     }
 
