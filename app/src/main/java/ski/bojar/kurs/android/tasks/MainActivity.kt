@@ -57,7 +57,32 @@ class MainActivity : ComponentActivity() {
         setContent {
             //MySurface()
             //MyCard()
-            MyBox()
+            //MyBox()
+            MyLayoutWeight()
+        }
+    }
+
+    @Composable
+    fun MyLayoutWeight() {
+        Row() {
+            Text(
+                text = "Text1",
+                modifier = Modifier
+                    .background(Color.Green)
+                    .weight(1f)
+            )
+            Text(
+                text = "Text2",
+                modifier = Modifier
+                    .background(Color.Yellow)
+//                    .weight(2f)
+            )
+            Text(
+                text = "Text3",
+                modifier = Modifier
+                    .background(Color.Red)
+//                    .weight(3f)
+            )
         }
     }
 
