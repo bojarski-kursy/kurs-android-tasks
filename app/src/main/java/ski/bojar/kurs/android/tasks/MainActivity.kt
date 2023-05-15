@@ -25,6 +25,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.Button
@@ -44,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -57,6 +59,98 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //MyMusicPlayerView()
+            MyUdemyLayoutExercise()
+        }
+    }
+
+    @Composable
+    fun MyUdemyLayoutExercise() {
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(Color.Black)
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                MyUdemyInfoView(Modifier.weight(1f))
+                MyUdemyPriceView()
+            }
+        }
+    }
+
+    @Composable
+    fun MyUdemyInfoView(modifier: Modifier) {
+        Column(modifier = modifier) {
+            Text(
+                text = "Kurs Kotlin + porównanie JAVA vs KOTLIN & quizy&zadania",
+                color = Color.White,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = "4,7",
+                    color = Color.Yellow
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = "star icon",
+                    tint = Color.Yellow
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = "Oceny: 21",
+                    color = Color.Magenta,
+                    textDecoration = TextDecoration.Underline
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = "109 uczestnika kursu",
+                    color = Color.White
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun MyUdemyPriceView() {
+        Row() {
+            Column(horizontalAlignment = Alignment.End) {
+                Text(
+                    text = "49,99 zł",
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    fontSize = 20.sp
+                )
+                Text(
+                    text = "239,99 zł",
+                    color = Color.LightGray,
+                    textDecoration = TextDecoration.LineThrough,
+                    fontSize = 14.sp
+                )
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                shape = RectangleShape,
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                Text(
+                    text = "Kup teraz",
+                    fontWeight = FontWeight.ExtraBold
+                )
+            }
         }
     }
 
