@@ -84,7 +84,22 @@ class MainActivity : ComponentActivity() {
             //MySlider()
             //MyIconButton()
             //MyFAB()
-            MyClickModifier()
+            //MyClickModifier()
+            MyShowTimeView()
+        }
+    }
+    
+    @Composable
+    fun MyShowTimeView() {
+        var isShowed by remember { mutableStateOf(false) }
+        
+        Row() {
+            Button(onClick = { isShowed = !isShowed }) {
+                Text(text = if (isShowed) "Schowaj" else "Pokaż")
+            }
+            if (isShowed) {
+                Text(text = "Hej, jestem tutaj! ;)")
+            }
         }
     }
 
