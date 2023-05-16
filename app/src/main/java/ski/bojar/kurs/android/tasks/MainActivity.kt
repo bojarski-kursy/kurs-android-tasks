@@ -50,6 +50,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Slider
@@ -87,8 +89,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyTextField()
+            //MyTextField()
+            MyOutlinedTextField()
         }
+    }
+
+    @Composable
+    fun MyOutlinedTextField() {
+        var text by remember { mutableStateOf("") }
+
+        OutlinedTextField(
+            value = text,
+            onValueChange = { text = it },
+            colors = OutlinedTextFieldDefaults.colors()
+        )
     }
 
     @Composable
