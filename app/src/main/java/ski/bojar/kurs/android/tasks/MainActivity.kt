@@ -39,6 +39,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -67,8 +69,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             //MyClickButton()
             //MyNumberCounterButtonExercise()
-            MyCheckbox()
+            //MyCheckbox()
+            MyRadioButton()
         }
+    }
+
+    @Composable
+    fun MyRadioButton() {
+        var isSelected by remember { mutableStateOf(true) }
+        RadioButton(
+            selected = isSelected,
+            onClick = { isSelected = !isSelected },
+            colors = RadioButtonDefaults.colors(selectedColor = Color.Cyan)
+        )
     }
 
     @Composable
