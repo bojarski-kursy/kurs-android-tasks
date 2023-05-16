@@ -22,14 +22,17 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Notifications
@@ -56,6 +59,8 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -67,8 +72,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -79,18 +87,29 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //MyClickButton()
-            //MyNumberCounterButtonExercise()
-            //MyCheckbox()
-            //MyRadioButton()
-            //MySwitch()
-            //MySlider()
-            //MyIconButton()
-            //MyFAB()
-            //MyClickModifier()
-            //MyShowTimeView()
-            MyShowTimeViewExercise()
+            MyTextField()
         }
+    }
+
+    @Composable
+    fun MyTextField() {
+        var text by remember { mutableStateOf("") }
+
+        TextField(
+            value = text,
+            onValueChange = { text = it },
+            label = { Text(text = "label") },
+            placeholder = { Text(text = "placeholder") },
+            leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "") },
+            trailingIcon = { Icon(imageVector = Icons.Default.Warning, contentDescription = "") },
+            isError = true,
+            colors = TextFieldDefaults.colors(),
+            textStyle = TextStyle(color = Color.Red),
+//            singleLine = true
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            visualTransformation = PasswordVisualTransformation()
+        )
     }
 
     @Composable
