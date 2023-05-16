@@ -41,6 +41,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
@@ -73,8 +75,27 @@ class MainActivity : ComponentActivity() {
             //MyNumberCounterButtonExercise()
             //MyCheckbox()
             //MyRadioButton()
-            MySwitch()
+            //MySwitch()
+            MySlider()
         }
+    }
+    
+    @Composable
+    fun MySlider() {
+        var sliderValue by remember { mutableStateOf(0f) }
+        Slider(
+            value = sliderValue,
+            onValueChange = { value -> sliderValue = value },
+            modifier = Modifier.padding(horizontal = 40.dp),
+            valueRange = 0f..100f,
+            steps = 9,
+            colors = SliderDefaults.colors(
+                thumbColor = Color.Blue,
+                activeTrackColor = Color.Green,
+                activeTickColor = Color.Red
+            )
+        )
+        Text(text = "$sliderValue")
     }
 
     @Composable
