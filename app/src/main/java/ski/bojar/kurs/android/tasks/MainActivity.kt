@@ -42,6 +42,8 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -70,8 +72,22 @@ class MainActivity : ComponentActivity() {
             //MyClickButton()
             //MyNumberCounterButtonExercise()
             //MyCheckbox()
-            MyRadioButton()
+            //MyRadioButton()
+            MySwitch()
         }
+    }
+
+    @Composable
+    fun MySwitch() {
+        var isChecked by remember { mutableStateOf(false) }
+        Switch(
+            checked = isChecked,
+            onCheckedChange = { value -> isChecked = value},
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = Color.Red,
+                checkedTrackColor = Color.Yellow
+            )
+        )
     }
 
     @Composable
