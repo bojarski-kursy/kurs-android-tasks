@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -82,8 +83,19 @@ class MainActivity : ComponentActivity() {
             //MySwitch()
             //MySlider()
             //MyIconButton()
-            MyFAB()
+            //MyFAB()
+            MyClickModifier()
         }
+    }
+
+    @Composable
+    fun MyClickModifier() {
+        var isClicked by remember { mutableStateOf(false) }
+        Text(
+            text = if (isClicked) "Kliknąłeś mnie!" else "Jeszcze mnie nikt nie kliknął :(",
+            modifier = Modifier
+                .clickable { isClicked = true }
+        )
     }
 
     @Composable
