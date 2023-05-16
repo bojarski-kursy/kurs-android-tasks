@@ -27,9 +27,12 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -85,7 +88,52 @@ class MainActivity : ComponentActivity() {
             //MyIconButton()
             //MyFAB()
             //MyClickModifier()
-            MyShowTimeView()
+            //MyShowTimeView()
+            MyShowTimeViewExercise()
+        }
+    }
+
+    @Composable
+    fun MyShowTimeViewExercise() {
+        var isSettingsShowed by remember { mutableStateOf(false) }
+        var volumeValue by remember { mutableStateOf(0f) }
+
+        Column() {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = isSettingsShowed,
+                    onCheckedChange = { isSettingsShowed = it }
+                )
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "settings icon"
+                )
+                Text(text = "Ustawienia")
+            }
+
+            if (isSettingsShowed) {
+                Column() {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            imageVector = Icons.Outlined.Notifications,
+                            contentDescription = "icon volume min"
+                        )
+                        Slider(
+                            value = volumeValue,
+                            onValueChange = { volumeValue = it },
+                            modifier = Modifier.width(300.dp)
+                        )
+                        Icon(
+                            imageVector = Icons.Filled.Notifications,
+                            contentDescription = "icon volume max",
+                            tint = if (volumeValue > 0.8f) Color.Red else Color.Black
+                        )
+                    }
+                    if (volumeValue > 0.8f) {
+                        Text(text = "Uważaj, bo ogłuchniesz!", color = Color.Red)
+                    }
+                }
+            }
         }
     }
     
