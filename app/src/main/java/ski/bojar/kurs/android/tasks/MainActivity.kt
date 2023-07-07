@@ -91,7 +91,45 @@ class MainActivity : ComponentActivity() {
         setContent {
             //MyTextField()
             //MyOutlinedTextField()
-            MyTextFieldExercise()
+            //MyTextFieldExercise()
+            MyTextFieldExercise2()
+        }
+    }
+
+    @Composable
+    fun MyTextFieldExercise2() {
+        var text by remember { mutableStateOf("") }
+        var isTextTooLong by remember { mutableStateOf(false) }
+        val maxChar = 20
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            TextField(
+                value = text,
+                onValueChange = { value ->
+                    text = value
+                    isTextTooLong = text.length > maxChar
+                },
+                modifier = Modifier.fillMaxWidth(),
+                isError = isTextTooLong
+            )
+
+            Box(modifier = Modifier.fillMaxWidth()) {
+                if (isTextTooLong) {
+                    Text(
+                        text = "Tekst jest za długi",
+                        color = Color.Red,
+                        modifier = Modifier.align(Alignment.TopStart)
+                    )
+                }
+                Text(
+                    text = "${text.length}/$maxChar",
+                    modifier = Modifier.align(Alignment.TopEnd)
+                )
+            }
         }
     }
 
