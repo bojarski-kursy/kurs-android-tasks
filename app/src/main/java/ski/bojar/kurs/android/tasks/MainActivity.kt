@@ -90,7 +90,43 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //MyTextField()
-            MyOutlinedTextField()
+            //MyOutlinedTextField()
+            MyTextFieldExercise()
+        }
+    }
+
+    @Composable
+    fun MyTextFieldExercise() {
+        var emailText by remember { mutableStateOf("") }
+        var passwordText by remember { mutableStateOf("") }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            OutlinedTextField(
+                value = emailText,
+                onValueChange = { emailText = it },
+                modifier = Modifier.fillMaxWidth(),
+                leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "") },
+                label = { Text(text = "Email") },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            OutlinedTextField(
+                value = passwordText,
+                onValueChange = { passwordText = it },
+                modifier = Modifier.fillMaxWidth(),
+                leadingIcon = { Icon(imageVector = Icons.Default.Lock, contentDescription = "") },
+                label = { Text(text = "Password") },
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
+            )
         }
     }
 
