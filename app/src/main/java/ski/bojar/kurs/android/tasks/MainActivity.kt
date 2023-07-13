@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -66,6 +68,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -92,7 +95,39 @@ class MainActivity : ComponentActivity() {
             //MyTextField()
             //MyOutlinedTextField()
             //MyTextFieldExercise()
-            MyTextFieldExercise2()
+            //MyTextFieldExercise2()
+            MyLazyColumn()
+        }
+    }
+
+    @Composable
+    fun MyLazyColumn() {
+//        Column() {
+//            for (i in 0..100) {
+//                Text(text = "Item $i")
+//            }
+//        }
+
+        val itemList = remember { mutableStateListOf(1, 3, 5, 7, 9, 11) }
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            //modifier = Modifier.padding(top = 20.dp)
+            contentPadding = PaddingValues(top = 20.dp)
+        ) {
+            item { Text(text = "Item A") }
+            item { Text(text = "Item B") }
+
+//            for (i in 0..100) {
+//                item { Text(text = "Item $i") }
+//            }
+            items(count = 100) { index ->
+                Text(text = "Item $index")
+            }
+
+            items(items = itemList) { item ->
+                Text(text = "$item")
+            }
         }
     }
 
