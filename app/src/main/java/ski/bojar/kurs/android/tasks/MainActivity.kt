@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -92,11 +93,26 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //MyTextField()
-            //MyOutlinedTextField()
-            //MyTextFieldExercise()
-            //MyTextFieldExercise2()
-            MyLazyColumn()
+            //MyLazyColumn()
+            MyLazyRow()
+        }
+    }
+
+    @Composable
+    fun MyLazyRow() {
+        val itemList = remember { mutableStateListOf("A", "B", "C") }
+
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(8.dp)
+        ) {
+            item { Text(text = "Z") }
+            items(count = 30) { index ->
+                Text(text = "Item $index")
+            }
+            items(items = itemList) { item ->
+                Text(text = "$item")
+            }
         }
     }
 
