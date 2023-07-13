@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -96,7 +98,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             //MyLazyColumn()
             //MyLazyRow()
-            MyLazyRowItem()
+            //MyLazyRowItem()
+            MyLazyVerticalGrid()
+        }
+    }
+
+    @Composable
+    fun MyLazyVerticalGrid() {
+        LazyVerticalGrid(
+            //columns = GridCells.Adaptive(150.dp)
+            columns = GridCells.Fixed(3),
+            contentPadding = PaddingValues(4.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            items(count = 100) { index ->
+                MyLazyItem(index)
+            }
         }
     }
 
