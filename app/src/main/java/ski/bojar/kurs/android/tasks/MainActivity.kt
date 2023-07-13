@@ -31,6 +31,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
@@ -94,7 +95,33 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             //MyLazyColumn()
-            MyLazyRow()
+            //MyLazyRow()
+            MyLazyRowItem()
+        }
+    }
+
+    @Composable
+    fun MyLazyRowItem() {
+        LazyRow(
+            contentPadding = PaddingValues(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            items(count = 100) { index ->
+                MyLazyItem(index)
+            }
+        }
+    }
+
+    @Composable
+    fun MyLazyItem(number: Int) {
+        Card(border = BorderStroke(1.dp, Color.DarkGray)) {
+            Row(
+                modifier = Modifier.padding(4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.Default.List, contentDescription = "")
+                Text(text = "Tekst $number")
+            }
         }
     }
 
