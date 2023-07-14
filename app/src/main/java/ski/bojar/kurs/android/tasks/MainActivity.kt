@@ -100,7 +100,26 @@ class MainActivity : ComponentActivity() {
             //MyLazyRow()
             //MyLazyRowItem()
             //MyLazyVerticalGrid()
-            MyLazyColumnClickExercise()
+            //MyLazyColumnClickExercise()
+            MyLazyRowClickExercise()
+        }
+    }
+
+    @Composable
+    fun MyLazyRowClickExercise() {
+        var selectedIndex by remember { mutableStateOf(-1) }
+
+        LazyRow() {
+            items(count = 100) { index ->
+                Surface(
+                    border = BorderStroke(1.dp, Color.Gray),
+                    color = if (selectedIndex == index) Color.LightGray else Color.White,
+                    modifier = Modifier
+                        .clickable { selectedIndex = index }
+                ) {
+                    Text(text = "$index", modifier = Modifier.padding(10.dp))
+                }
+            }
         }
     }
     
