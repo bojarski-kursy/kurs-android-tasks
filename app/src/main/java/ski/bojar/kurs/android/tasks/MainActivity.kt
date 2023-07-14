@@ -101,7 +101,21 @@ class MainActivity : ComponentActivity() {
             //MyLazyRowItem()
             //MyLazyVerticalGrid()
             //MyLazyColumnClickExercise()
-            MyLazyRowClickExercise()
+            //MyLazyRowClickExercise()
+            MyLazyColumnRowExercise()
+        }
+    }
+
+    @Composable
+    fun MyLazyColumnRowExercise() {
+        LazyColumn() {
+            items(count = 100) { columnIndex ->
+                LazyRow() {
+                    items(count = 100) { rowIndex ->
+                        MyLazyItem(number = columnIndex * rowIndex)
+                    }
+                }
+            }
         }
     }
 
