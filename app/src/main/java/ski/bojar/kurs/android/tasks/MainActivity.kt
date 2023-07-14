@@ -102,7 +102,33 @@ class MainActivity : ComponentActivity() {
             //MyLazyVerticalGrid()
             //MyLazyColumnClickExercise()
             //MyLazyRowClickExercise()
-            MyLazyColumnRowExercise()
+            //MyLazyColumnRowExercise()
+            MyLazyGridExercise()
+        }
+    }
+
+    @Composable
+    fun MyLazyGridExercise() {
+        var count by remember { mutableStateOf(3) }
+
+        Column() {
+            Row() {
+                Button(onClick = { count = 1 }) {
+                    Text(text = "1")
+                }
+                Button(onClick = { count = 3 }) {
+                    Text(text = "3")
+                }
+                Button(onClick = { count = 5 }) {
+                    Text(text = "5")
+                }
+            }
+
+            LazyVerticalGrid(columns = GridCells.Fixed(count)) {
+                items(count = 100) { index ->
+                    MyLazyItem(number = index)
+                }
+            }
         }
     }
 
