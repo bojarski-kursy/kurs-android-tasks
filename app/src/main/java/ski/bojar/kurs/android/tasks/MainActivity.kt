@@ -99,7 +99,25 @@ class MainActivity : ComponentActivity() {
             //MyLazyColumn()
             //MyLazyRow()
             //MyLazyRowItem()
-            MyLazyVerticalGrid()
+            //MyLazyVerticalGrid()
+            MyLazyColumnClickExercise()
+        }
+    }
+    
+    @Composable
+    fun MyLazyColumnClickExercise() {
+        var counter by remember { mutableStateOf(0) }
+        val itemList = remember { mutableStateListOf<Int>() }
+        
+        Column() {
+            Button(onClick = { itemList.add(counter++) }) {
+                Text(text = "Add")
+            }
+            LazyColumn() {
+                items(items = itemList) { item ->
+                    Text(text = "$item")
+                }
+            }
         }
     }
 
