@@ -99,7 +99,30 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyHomeActivityView()
+            //MyHomeActivityView()
+            MyExerciseActivityView()
+        }
+    }
+
+    @Composable
+    fun MyExerciseActivityView() {
+        var text by remember { mutableStateOf("") }
+        val context = LocalContext.current
+        val intent = Intent(context, MyExerciseActivity::class.java)
+        intent.putExtra("exercise_value", text)
+
+        Column() {
+            OutlinedTextField(
+                value = text,
+                onValueChange = { value ->
+                    text = value
+                },
+                label = { Text(text = "Wpisz tekst") }
+            )
+
+            Button(onClick = { startActivity(intent) }) {
+                Text(text = "Start MyExercise Activity")
+            }
         }
     }
 

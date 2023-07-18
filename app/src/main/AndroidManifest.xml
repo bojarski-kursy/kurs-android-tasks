@@ -13,6 +13,11 @@
         android:theme="@style/Theme.Tasks"
         tools:targetApi="31">
         <activity
+            android:name=".MyExerciseActivity"
+            android:exported="false"
+            android:label="@string/title_activity_my_exercise"
+            android:theme="@style/Theme.Tasks" />
+        <activity
             android:name=".HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
