@@ -1,5 +1,7 @@
 package ski.bojar.kurs.android.tasks
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -81,6 +83,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -96,14 +99,17 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //MyLazyColumn()
-            //MyLazyRow()
-            //MyLazyRowItem()
-            //MyLazyVerticalGrid()
-            //MyLazyColumnClickExercise()
-            //MyLazyRowClickExercise()
-            //MyLazyColumnRowExercise()
-            MyLazyGridExercise()
+            MyHomeActivityView()
+        }
+    }
+
+    @Composable
+    fun MyHomeActivityView() {
+        val context: Context = LocalContext.current
+        val intent: Intent = Intent(context, HomeActivity::class.java)
+
+        Button(onClick = { startActivity(intent) }) {
+            Text(text = "Start Home Activity")
         }
     }
 
