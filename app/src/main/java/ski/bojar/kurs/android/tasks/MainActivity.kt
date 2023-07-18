@@ -107,6 +107,7 @@ class MainActivity : ComponentActivity() {
     fun MyHomeActivityView() {
         val context: Context = LocalContext.current
         val intent: Intent = Intent(context, HomeActivity::class.java)
+        intent.putExtra("welcome_value", "Przyszedłem z MainActivity")
 
         Button(onClick = { startActivity(intent) }) {
             Text(text = "Start Home Activity")

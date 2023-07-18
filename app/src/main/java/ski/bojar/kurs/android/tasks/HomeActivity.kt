@@ -9,13 +9,16 @@ import androidx.compose.runtime.Composable
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val welcomeValue: String? = intent.getStringExtra("welcome_value")
+
         setContent {
-            HomeText()
+            HomeText(welcomeValue)
         }
     }
 
     @Composable
-    fun HomeText() {
-        Text(text = "Witaj w domu!")
+    fun HomeText(value: String?) {
+        Text(text = value ?: "Witaj w domu!")
     }
 }
