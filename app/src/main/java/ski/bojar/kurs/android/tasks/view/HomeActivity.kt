@@ -1,4 +1,4 @@
-package ski.bojar.kurs.android.tasks
+package ski.bojar.kurs.android.tasks.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

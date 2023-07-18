@@ -1,4 +1,4 @@
-package ski.bojar.kurs.android.tasks
+package ski.bojar.kurs.android.tasks.view
 
 import android.content.Context
 import android.content.Intent
