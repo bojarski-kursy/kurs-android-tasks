@@ -1,5 +1,6 @@
 package ski.bojar.kurs.android.tasks.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,10 +27,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ski.bojar.kurs.android.tasks.model.ColorType
+import ski.bojar.kurs.android.tasks.model.Task
 
 class TaskActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +45,8 @@ class TaskActivity : ComponentActivity() {
 
     @Composable
     fun TaskView() {
-        val taskColors = listOf(Color.Cyan, Color.Yellow, Color.Magenta)
+        val context = LocalContext.current
+        val taskColors = ColorType.values()
 
         var currentColor by remember { mutableStateOf(taskColors.first()) }
         var titleText by remember { mutableStateOf("") }
@@ -53,7 +58,7 @@ class TaskActivity : ComponentActivity() {
             Text(text = "Task", fontSize = 30.sp)
             Spacer(modifier = Modifier.height(20.dp))
             Card(
-                colors = CardDefaults.cardColors(containerColor = currentColor),
+                colors = CardDefaults.cardColors(containerColor = currentColor.color),
                 elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
             ) {
                 OutlinedTextField(
@@ -83,9 +88,9 @@ class TaskActivity : ComponentActivity() {
                     Button(
                         onClick = { currentColor = color},
                         shape = CircleShape,
-                        colors = ButtonDefaults.buttonColors(containerColor = color),
+                        colors = ButtonDefaults.buttonColors(containerColor = color.color),
                         elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 8.dp),
-                        border = BorderStroke(2.dp, if (currentColor == color) Color.Gray else color),
+                        border = BorderStroke(2.dp, if (currentColor == color) Color.Gray else color.color),
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .size(40.dp)
@@ -96,8 +101,18 @@ class TaskActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(40.dp))
 
             Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    val task = Task(
+                        title = titleText,
+                        description = descriptionText,
+                        color = currentColor
+                    )
+
+                    val intent = Intent(context, HomeActivity::class.java)
+                    intent.putExtra("task", task)
+                    startActivity(intent)
+                }
             ) {
                 Text(text = "Save")
             }
