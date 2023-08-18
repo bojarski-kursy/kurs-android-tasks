@@ -17,11 +17,6 @@
             android:exported="true"
             android:label="@string/title_activity_task"
             android:theme="@style/Theme.Tasks" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.MyExerciseActivity"
@@ -30,9 +25,15 @@
             android:theme="@style/Theme.Tasks" />
         <activity
             android:name=".view.HomeActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Tasks" />
+            android:theme="@style/Theme.Tasks" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.MainActivity"
             android:exported="true"
