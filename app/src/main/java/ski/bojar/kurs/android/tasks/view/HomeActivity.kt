@@ -94,7 +94,15 @@ class HomeActivity : ComponentActivity() {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            TaskListView()
+            if (taskList.isEmpty()) {
+                Text(
+                    text = "Empty task list",
+                    fontSize = 20.sp,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                TaskListView()
+            }
 
             FloatingActionButton(
                 onClick = {
