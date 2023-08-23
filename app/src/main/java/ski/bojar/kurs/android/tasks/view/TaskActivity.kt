@@ -84,13 +84,13 @@ class TaskActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(20.dp))
 
             LazyRow() {
-                items(items = taskColors) { color ->
+                items(items = taskColors) { colorType ->
                     Button(
-                        onClick = { currentColor = color},
+                        onClick = { currentColor = colorType},
                         shape = CircleShape,
-                        colors = ButtonDefaults.buttonColors(containerColor = color.color),
+                        colors = ButtonDefaults.buttonColors(containerColor = colorType.color),
                         elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 8.dp),
-                        border = BorderStroke(2.dp, if (currentColor == color) Color.Gray else color.color),
+                        border = BorderStroke(2.dp, if (currentColor == colorType) Color.Gray else colorType.color),
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .size(40.dp)
@@ -106,7 +106,7 @@ class TaskActivity : ComponentActivity() {
                     val task = Task(
                         title = titleText,
                         description = descriptionText,
-                        color = currentColor
+                        colorType = currentColor
                     )
 
                     val intent = Intent(context, HomeActivity::class.java)
