@@ -108,6 +108,8 @@ class HomeActivity : ComponentActivity() {
                 onClick = {
                     val intent = Intent(context, TaskActivity::class.java)
                     startActivity(intent)
+
+                    finish()
                 },
                 modifier = Modifier
                     .padding(16.dp)

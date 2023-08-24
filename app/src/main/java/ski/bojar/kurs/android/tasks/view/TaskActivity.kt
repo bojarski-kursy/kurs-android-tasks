@@ -112,6 +112,8 @@ class TaskActivity : ComponentActivity() {
                     val intent = Intent(context, HomeActivity::class.java)
                     intent.putExtra("task", task)
                     startActivity(intent)
+
+                    finish()
                 }
             ) {
                 Text(text = "Save")
