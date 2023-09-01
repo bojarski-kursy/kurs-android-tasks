@@ -41,7 +41,9 @@ class HomeActivity : ComponentActivity() {
         val task = intent.getSerializableExtra("task") as? Task
         task?.let {
             //Toast.makeText(this, "task: $task", Toast.LENGTH_LONG).show()
-            taskList.add(it)
+            //Log.d("MyTasksApp", "task: $task")
+
+            taskList.add(task)
         }
 
         setContent {
