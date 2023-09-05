@@ -42,7 +42,10 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        taskList = StorageOperations.readTaskList(this).toMutableList()
+        //taskList = StorageOperations.readTaskList(this).toMutableList()
+        runBlocking {
+            taskList = taskNetworkRepository.getAllTasks().toMutableList()
+        }
 
         //val welcomeValue: String? = intent.getStringExtra("welcome_value")
         val task = intent.getSerializableExtra("task") as? Task
