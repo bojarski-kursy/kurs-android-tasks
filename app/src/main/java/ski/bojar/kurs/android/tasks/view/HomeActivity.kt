@@ -29,10 +29,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.runBlocking
+import ski.bojar.kurs.android.tasks.api.ServiceConfiguration
+import ski.bojar.kurs.android.tasks.api.TaskNetworkRepository
 import ski.bojar.kurs.android.tasks.model.Task
 import ski.bojar.kurs.android.tasks.util.StorageOperations
 
 var taskList = mutableListOf<Task>()
+val taskNetworkRepository = TaskNetworkRepository(ServiceConfiguration.taskService)
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +52,10 @@ class HomeActivity : ComponentActivity() {
 
             taskList.add(task)
             StorageOperations.writeTaskList(this, taskList)
+
+            runBlocking {
+                taskNetworkRepository.addTask(task)
+            }
         }
 
         setContent {
