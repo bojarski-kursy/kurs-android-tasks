@@ -30,12 +30,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ski.bojar.kurs.android.tasks.model.Task
+import ski.bojar.kurs.android.tasks.util.StorageOperations
 
 var taskList = mutableListOf<Task>()
 
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        taskList = StorageOperations.readTaskList(this).toMutableList()
 
         //val welcomeValue: String? = intent.getStringExtra("welcome_value")
         val task = intent.getSerializableExtra("task") as? Task
@@ -44,6 +47,7 @@ class HomeActivity : ComponentActivity() {
             //Log.d("MyTasksApp", "task: $task")
 
             taskList.add(task)
+            StorageOperations.writeTaskList(this, taskList)
         }
 
         setContent {
