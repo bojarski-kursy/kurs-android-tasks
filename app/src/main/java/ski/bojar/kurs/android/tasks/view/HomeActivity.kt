@@ -2,6 +2,8 @@ package ski.bojar.kurs.android.tasks.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -42,9 +44,17 @@ class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val context = this
+
         //taskList = StorageOperations.readTaskList(this).toMutableList()
         runBlocking {
-            taskList = taskNetworkRepository.getAllTasks().toMutableList()
+            try {
+                taskList = taskNetworkRepository.getAllTasks().toMutableList()
+            } catch (e: Exception) {
+                Log.e("MyTasksApp", "Network get all tasks: $e")
+                taskList = StorageOperations.readTaskList(context).toMutableList()
+                Toast.makeText(context, "Tasks loaded from local storage", Toast.LENGTH_LONG).show()
+            }
         }
 
         //val welcomeValue: String? = intent.getStringExtra("welcome_value")
@@ -57,7 +67,12 @@ class HomeActivity : ComponentActivity() {
             StorageOperations.writeTaskList(this, taskList)
 
             runBlocking {
-                taskNetworkRepository.addTask(task)
+                try {
+                    taskNetworkRepository.addTask(task)
+                } catch (e: Exception) {
+                    Log.e("MyTasksApp", "Network add task: $e")
+                    Toast.makeText(context, "Connection problem. Try again.", Toast.LENGTH_LONG).show()
+                }
             }
         }
 
