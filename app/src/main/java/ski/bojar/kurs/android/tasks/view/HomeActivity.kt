@@ -50,6 +50,7 @@ class HomeActivity : ComponentActivity() {
         runBlocking {
             try {
                 taskList = taskNetworkRepository.getAllTasks().toMutableList()
+                StorageOperations.writeTaskList(context, taskList)
             } catch (e: Exception) {
                 Log.e("MyTasksApp", "Network get all tasks: $e")
                 taskList = StorageOperations.readTaskList(context).toMutableList()
