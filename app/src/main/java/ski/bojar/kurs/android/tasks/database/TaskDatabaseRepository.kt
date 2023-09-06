@@ -8,4 +8,8 @@ class TaskDatabaseRepository(private val db: AppDatabase) {
         db.taskDao().insert(task)
     }
 
+    suspend fun getAllTasks(): List<Task> {
+        return db.taskDao().getAll()
+    }
+
 }
