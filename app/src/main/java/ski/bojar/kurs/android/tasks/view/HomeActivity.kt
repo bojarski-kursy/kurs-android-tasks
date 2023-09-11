@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.runBlocking
 import ski.bojar.kurs.android.tasks.api.ServiceConfiguration
 import ski.bojar.kurs.android.tasks.api.TaskNetworkRepository
+import ski.bojar.kurs.android.tasks.database.DatabaseConfiguration
+import ski.bojar.kurs.android.tasks.database.TaskDatabaseRepository
 import ski.bojar.kurs.android.tasks.model.Task
 import ski.bojar.kurs.android.tasks.util.StorageOperations
 
@@ -54,7 +56,8 @@ class HomeActivity : ComponentActivity() {
             //Log.d("MyTasksApp", "task: $task")
 
             taskList.add(task)
-            StorageOperations.writeTaskList(this, taskList)
+            //StorageOperations.writeTaskList(this, taskList)
+            insertTaskToDatabase(task)
 
             addTaskViaNetwork(task)
         }
@@ -62,6 +65,24 @@ class HomeActivity : ComponentActivity() {
         setContent {
             //HomeText(welcomeValue)
             HomeView()
+        }
+    }
+
+    private fun insertTaskToDatabase(task: Task) {
+        val db = DatabaseConfiguration.getDatabase(this)
+        val taskDatabaseRepository = TaskDatabaseRepository(db)
+
+        runBlocking {
+            taskDatabaseRepository.insertTask(task)
+        }
+    }
+
+    private fun getAllTasksFromDatabase() {
+        val db = DatabaseConfiguration.getDatabase(this)
+        val taskDatabaseRepository = TaskDatabaseRepository(db)
+
+        runBlocking {
+            taskList = taskDatabaseRepository.getAllTasks().toMutableList()
         }
     }
 
@@ -74,7 +95,8 @@ class HomeActivity : ComponentActivity() {
                 StorageOperations.writeTaskList(context, taskList)
             } catch (e: Exception) {
                 Log.e("MyTasksApp", "Network get all tasks: $e")
-                taskList = StorageOperations.readTaskList(context).toMutableList()
+                //taskList = StorageOperations.readTaskList(context).toMutableList()
+                getAllTasksFromDatabase()
                 Toast.makeText(context, "Tasks loaded from local storage", Toast.LENGTH_LONG).show()
             }
         }
