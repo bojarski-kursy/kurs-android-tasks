@@ -32,9 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.runBlocking
+import org.koin.android.ext.android.inject
 import ski.bojar.kurs.android.tasks.api.ServiceConfiguration
 import ski.bojar.kurs.android.tasks.api.TaskNetworkRepository
-import ski.bojar.kurs.android.tasks.database.DatabaseConfiguration
 import ski.bojar.kurs.android.tasks.database.TaskDatabaseRepository
 import ski.bojar.kurs.android.tasks.model.Task
 
@@ -42,6 +42,9 @@ var taskList = mutableListOf<Task>()
 val taskNetworkRepository = TaskNetworkRepository(ServiceConfiguration.taskService)
 
 class HomeActivity : ComponentActivity() {
+
+    val taskDatabaseRepository by inject<TaskDatabaseRepository>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("MyTasksApp", "HomeActivity onCreate()")
@@ -69,27 +72,18 @@ class HomeActivity : ComponentActivity() {
     }
 
     private fun insertTaskToDatabase(task: Task) {
-        val db = DatabaseConfiguration.getDatabase(this)
-        val taskDatabaseRepository = TaskDatabaseRepository(db)
-
         runBlocking {
             taskDatabaseRepository.insertTask(task)
         }
     }
 
     private fun insertAllTasksToDatabase(taskList: List<Task>) {
-        val db = DatabaseConfiguration.getDatabase(this)
-        val taskDatabaseRepository = TaskDatabaseRepository(db)
-
         runBlocking {
             taskDatabaseRepository.insertAllTasks(taskList)
         }
     }
 
     private fun getAllTasksFromDatabase() {
-        val db = DatabaseConfiguration.getDatabase(this)
-        val taskDatabaseRepository = TaskDatabaseRepository(db)
-
         runBlocking {
             taskList = taskDatabaseRepository.getAllTasks().toMutableList()
         }
