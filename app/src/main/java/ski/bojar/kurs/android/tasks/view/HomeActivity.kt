@@ -44,6 +44,7 @@ val taskNetworkRepository = TaskNetworkRepository(ServiceConfiguration.taskServi
 class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("MyTasksApp", "HomeActivity onCreate()")
 
         //taskList = StorageOperations.readTaskList(this).toMutableList()
         getAllTasksViaNetwork()
