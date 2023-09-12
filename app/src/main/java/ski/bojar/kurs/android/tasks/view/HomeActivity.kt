@@ -33,17 +33,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.runBlocking
 import org.koin.android.ext.android.inject
-import ski.bojar.kurs.android.tasks.api.ServiceConfiguration
 import ski.bojar.kurs.android.tasks.api.TaskNetworkRepository
 import ski.bojar.kurs.android.tasks.database.TaskDatabaseRepository
 import ski.bojar.kurs.android.tasks.model.Task
 
 var taskList = mutableListOf<Task>()
-val taskNetworkRepository = TaskNetworkRepository(ServiceConfiguration.taskService)
 
 class HomeActivity : ComponentActivity() {
 
     val taskDatabaseRepository by inject<TaskDatabaseRepository>()
+    val taskNetworkRepository by inject<TaskNetworkRepository>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
