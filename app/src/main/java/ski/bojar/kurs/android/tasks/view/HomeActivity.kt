@@ -37,7 +37,6 @@ import ski.bojar.kurs.android.tasks.api.TaskNetworkRepository
 import ski.bojar.kurs.android.tasks.database.DatabaseConfiguration
 import ski.bojar.kurs.android.tasks.database.TaskDatabaseRepository
 import ski.bojar.kurs.android.tasks.model.Task
-import ski.bojar.kurs.android.tasks.util.StorageOperations
 
 var taskList = mutableListOf<Task>()
 val taskNetworkRepository = TaskNetworkRepository(ServiceConfiguration.taskService)
@@ -77,6 +76,15 @@ class HomeActivity : ComponentActivity() {
         }
     }
 
+    private fun insertAllTasksToDatabase(taskList: List<Task>) {
+        val db = DatabaseConfiguration.getDatabase(this)
+        val taskDatabaseRepository = TaskDatabaseRepository(db)
+
+        runBlocking {
+            taskDatabaseRepository.insertAllTasks(taskList)
+        }
+    }
+
     private fun getAllTasksFromDatabase() {
         val db = DatabaseConfiguration.getDatabase(this)
         val taskDatabaseRepository = TaskDatabaseRepository(db)
@@ -92,7 +100,8 @@ class HomeActivity : ComponentActivity() {
         runBlocking {
             try {
                 taskList = taskNetworkRepository.getAllTasks().toMutableList()
-                StorageOperations.writeTaskList(context, taskList)
+                //StorageOperations.writeTaskList(context, taskList)
+                insertAllTasksToDatabase(taskList)
             } catch (e: Exception) {
                 Log.e("MyTasksApp", "Network get all tasks: $e")
                 //taskList = StorageOperations.readTaskList(context).toMutableList()
