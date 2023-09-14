@@ -2,6 +2,7 @@ package ski.bojar.kurs.android.tasks.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -18,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,14 +34,35 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ski.bojar.kurs.android.tasks.model.ColorType
 import ski.bojar.kurs.android.tasks.model.Task
+import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
+import ski.bojar.kurs.android.tasks.viewmodel.TaskViewModel
 
 class TaskActivity : ComponentActivity() {
+
+    val taskViewModel by viewModel<TaskViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             TaskView()
+            observeAddTaskStatus()
+        }
+    }
+
+    private fun observeAddTaskStatus() {
+        when (taskViewModel.addTaskStatus) {
+            TaskOperationStatus.SUCCESS -> {
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            TaskOperationStatus.ERROR -> {
+                Toast.makeText(this, "Conection problem. Try again.", Toast.LENGTH_LONG).show()
+            }
+            TaskOperationStatus.LOADING, TaskOperationStatus.UNKNOWN -> {}
         }
     }
 
@@ -109,14 +132,20 @@ class TaskActivity : ComponentActivity() {
                         colorType = currentColor
                     )
 
-                    val intent = Intent(context, HomeActivity::class.java)
-                    intent.putExtra("task", task)
-                    startActivity(intent)
+//                    val intent = Intent(context, HomeActivity::class.java)
+//                    intent.putExtra("task", task)
+//                    startActivity(intent)
+//
+//                    finish()
 
-                    finish()
+                    taskViewModel.addTask(task)
                 }
             ) {
-                Text(text = "Save")
+                if (taskViewModel.addTaskStatus == TaskOperationStatus.LOADING) {
+                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
+                } else {
+                    Text(text = "Save")
+                }
             }
         }
     }
