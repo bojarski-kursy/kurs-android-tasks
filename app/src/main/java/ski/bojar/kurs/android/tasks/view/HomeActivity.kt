@@ -3,7 +3,6 @@ package ski.bojar.kurs.android.tasks.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -31,24 +30,25 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.runBlocking
-import org.koin.android.ext.android.inject
-import ski.bojar.kurs.android.tasks.api.TaskNetworkRepository
-import ski.bojar.kurs.android.tasks.database.TaskDatabaseRepository
-import ski.bojar.kurs.android.tasks.model.Task
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import ski.bojar.kurs.android.tasks.viewmodel.TaskViewModel
 
-var taskList = mutableListOf<Task>()
+//var taskList = mutableListOf<Task>()
 
 class HomeActivity : ComponentActivity() {
 
-    val taskDatabaseRepository by inject<TaskDatabaseRepository>()
-    val taskNetworkRepository by inject<TaskNetworkRepository>()
+//    val taskDatabaseRepository by inject<TaskDatabaseRepository>()
+//    val taskNetworkRepository by inject<TaskNetworkRepository>()
+    val taskViewModel by viewModel<TaskViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("MyTasksApp", "HomeActivity onCreate()")
 
+        taskViewModel.getAllTasks()
+
         //taskList = StorageOperations.readTaskList(this).toMutableList()
+        /*
         getAllTasksViaNetwork()
 
         //val welcomeValue: String? = intent.getStringExtra("welcome_value")
@@ -63,13 +63,14 @@ class HomeActivity : ComponentActivity() {
 
             addTaskViaNetwork(task)
         }
+        */
 
         setContent {
             //HomeText(welcomeValue)
             HomeView()
         }
     }
-
+/*
     private fun insertTaskToDatabase(task: Task) {
         runBlocking {
             taskDatabaseRepository.insertTask(task)
@@ -117,7 +118,7 @@ class HomeActivity : ComponentActivity() {
             }
         }
     }
-
+*/
     @Composable
     fun TaskListView() {
         Column(modifier = Modifier.padding(horizontal = 20.dp)) {
@@ -131,7 +132,7 @@ class HomeActivity : ComponentActivity() {
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(items = taskList) { task ->
+                items(items = taskViewModel.taskList) { task ->
                     Card(
                         colors = CardDefaults.cardColors(containerColor = task.colorType.color),
                         elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
@@ -162,7 +163,7 @@ class HomeActivity : ComponentActivity() {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            if (taskList.isEmpty()) {
+            if (taskViewModel.taskList.isEmpty()) {
                 Text(
                     text = "Empty task list",
                     fontSize = 20.sp,
