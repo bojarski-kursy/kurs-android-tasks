@@ -18,14 +18,18 @@ class TaskViewModel(
 
     var taskList by mutableStateOf(emptyList<Task>())
     var addTaskStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
+    var getAllTasksStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
 
     fun getAllTasks() {
         viewModelScope.launch {
             try {
+                getAllTasksStatus = TaskOperationStatus.LOADING
                 taskList = taskNetworkRepository.getAllTasks().toMutableList()
                 taskDatabaseRepository.insertAllTasks(taskList)
+                getAllTasksStatus = TaskOperationStatus.SUCCESS
             } catch (e: Exception) {
                 taskList = taskDatabaseRepository.getAllTasks()
+                getAllTasksStatus = TaskOperationStatus.ERROR
             }
         }
     }

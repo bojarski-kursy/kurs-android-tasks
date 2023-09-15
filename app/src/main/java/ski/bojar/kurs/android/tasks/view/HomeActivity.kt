@@ -3,6 +3,7 @@ package ski.bojar.kurs.android.tasks.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -31,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
 import ski.bojar.kurs.android.tasks.viewmodel.TaskViewModel
 
 //var taskList = mutableListOf<Task>()
@@ -68,8 +71,16 @@ class HomeActivity : ComponentActivity() {
         setContent {
             //HomeText(welcomeValue)
             HomeView()
+            observeGetAllTasksStatus()
         }
     }
+
+    private fun observeGetAllTasksStatus() {
+        if (taskViewModel.getAllTasksStatus == TaskOperationStatus.ERROR) {
+            Toast.makeText(this, "Tasks loaded from local storage", Toast.LENGTH_LONG).show()
+        }
+    }
+
 /*
     private fun insertTaskToDatabase(task: Task) {
         runBlocking {
@@ -163,15 +174,22 @@ class HomeActivity : ComponentActivity() {
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            if (taskViewModel.taskList.isEmpty()) {
-                Text(
-                    text = "Empty task list",
-                    fontSize = 20.sp,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            } else {
-                TaskListView()
+            when (taskViewModel.getAllTasksStatus) {
+                TaskOperationStatus.SUCCESS, TaskOperationStatus.ERROR -> {
+                    if (taskViewModel.taskList.isEmpty()) {
+                        Text(
+                            text = "Empty task list",
+                            fontSize = 20.sp,
+                            modifier = Modifier.align(Alignment.Center)
+                        )
+                    } else {
+                        TaskListView()
+                    }
+                }
+                TaskOperationStatus.LOADING -> CircularProgressIndicator(Modifier.align(Alignment.Center))
+                TaskOperationStatus.UNKNOWN -> {}
             }
+
 
             FloatingActionButton(
                 onClick = {
