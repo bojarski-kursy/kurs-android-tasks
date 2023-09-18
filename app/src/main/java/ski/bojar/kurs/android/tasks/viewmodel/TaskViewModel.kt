@@ -20,6 +20,8 @@ class TaskViewModel(
     var addTaskStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
     var getAllTasksStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
 
+    //var titleText by mutableStateOf("")
+
     fun getAllTasks() {
         viewModelScope.launch {
             try {

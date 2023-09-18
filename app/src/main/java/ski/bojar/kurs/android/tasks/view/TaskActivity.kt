@@ -25,7 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -72,9 +72,9 @@ class TaskActivity : ComponentActivity() {
         val context = LocalContext.current
         val taskColors = ColorType.values()
 
-        var currentColor by remember { mutableStateOf(taskColors.first()) }
-        var titleText by remember { mutableStateOf("") }
-        var descriptionText by remember { mutableStateOf("") }
+        var currentColor by rememberSaveable { mutableStateOf(taskColors.first()) }
+        var titleText by rememberSaveable { mutableStateOf("") }
+        var descriptionText by rememberSaveable { mutableStateOf("") }
         
         Column(
             modifier = Modifier.padding(20.dp)
@@ -86,8 +86,8 @@ class TaskActivity : ComponentActivity() {
                 elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
             ) {
                 OutlinedTextField(
-                    value = titleText,
-                    onValueChange = { titleText = it },
+                    value = titleText, // taskViewModel.titleText
+                    onValueChange = { titleText = it }, // taskViewModel.titleText
                     label = { Text(text = "Title") },
                     textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
                     modifier = Modifier
