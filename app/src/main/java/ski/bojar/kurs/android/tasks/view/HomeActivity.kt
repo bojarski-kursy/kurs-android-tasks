@@ -75,6 +75,12 @@ class HomeActivity : ComponentActivity() {
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        Log.d("MyTasksApp", "HomeActivity onNewIntent()")
+        taskViewModel.getAllTasks()
+    }
+
     private fun observeGetAllTasksStatus() {
         if (taskViewModel.getAllTasksStatus == TaskOperationStatus.ERROR) {
             Toast.makeText(this, "Tasks loaded from local storage", Toast.LENGTH_LONG).show()
@@ -196,7 +202,7 @@ class HomeActivity : ComponentActivity() {
                     val intent = Intent(context, TaskActivity::class.java)
                     startActivity(intent)
 
-                    finish()
+//                    finish()
                 },
                 modifier = Modifier
                     .padding(16.dp)
