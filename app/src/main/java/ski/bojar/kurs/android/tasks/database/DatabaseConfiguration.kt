@@ -7,5 +7,7 @@ object DatabaseConfiguration {
 
     fun getDatabase(context: Context) = Room.databaseBuilder(
         context, AppDatabase::class.java, "tasks-database"
-    ).build()
+    )
+        .fallbackToDestructiveMigration()
+        .build()
 }

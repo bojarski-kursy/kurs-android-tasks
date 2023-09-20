@@ -1,6 +1,7 @@
 package ski.bojar.kurs.android.tasks.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -17,4 +18,7 @@ interface TaskDao {
 
     @Query("SELECT * FROM task")
     suspend fun getAll(): List<Task>
+
+    @Delete
+    suspend fun delete(task: Task)
 }

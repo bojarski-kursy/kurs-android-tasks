@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import ski.bojar.kurs.android.tasks.api.TaskNetworkRepository
 import ski.bojar.kurs.android.tasks.database.TaskDatabaseRepository
 import ski.bojar.kurs.android.tasks.model.Task
+import ski.bojar.kurs.android.tasks.model.TaskIdResponse
 import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
 
 class TaskViewModel(
@@ -40,12 +41,34 @@ class TaskViewModel(
         viewModelScope.launch {
             try {
                 addTaskStatus = TaskOperationStatus.LOADING
-                taskNetworkRepository.addTask(task)
-                taskDatabaseRepository.insertTask(task)
+                val response: TaskIdResponse = taskNetworkRepository.addTask(task)
+                taskDatabaseRepository.insertTask(task.copy(id = response.name))
                 addTaskStatus = TaskOperationStatus.SUCCESS
             } catch (e: Exception) {
                 addTaskStatus = TaskOperationStatus.ERROR
             }
+        }
+    }
+
+    fun deleteTask(task: Task) {
+        viewModelScope.launch {
+            try {
+                taskNetworkRepository.deleteTask(task.id)
+                taskDatabaseRepository.deleteTask(task)
+                removeTaskFromList(task)
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    private fun removeTaskFromList(task: Task) {
+//        val mutableTaskList = taskList.toMutableList()
+//        mutableTaskList.remove(task)
+//        taskList = mutableTaskList
+        taskList.toMutableList().also {
+            it.remove(task)
+            taskList = it
         }
     }
 
