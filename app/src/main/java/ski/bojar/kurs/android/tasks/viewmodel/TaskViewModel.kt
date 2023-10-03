@@ -18,7 +18,7 @@ class TaskViewModel(
 ) : ViewModel() {
 
     var taskList by mutableStateOf(emptyList<Task>())
-    var addTaskStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
+    var addEditTaskStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
     var getAllTasksStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
 
     //var titleText by mutableStateOf("")
@@ -40,12 +40,12 @@ class TaskViewModel(
     fun addTask(task: Task) {
         viewModelScope.launch {
             try {
-                addTaskStatus = TaskOperationStatus.LOADING
+                addEditTaskStatus = TaskOperationStatus.LOADING
                 val response: TaskIdResponse = taskNetworkRepository.addTask(task)
                 taskDatabaseRepository.insertTask(task.copy(id = response.name))
-                addTaskStatus = TaskOperationStatus.SUCCESS
+                addEditTaskStatus = TaskOperationStatus.SUCCESS
             } catch (e: Exception) {
-                addTaskStatus = TaskOperationStatus.ERROR
+                addEditTaskStatus = TaskOperationStatus.ERROR
             }
         }
     }
@@ -69,6 +69,19 @@ class TaskViewModel(
         taskList.toMutableList().also {
             it.remove(task)
             taskList = it
+        }
+    }
+
+    fun editTask(task: Task) {
+        viewModelScope.launch {
+            try {
+                addEditTaskStatus = TaskOperationStatus.LOADING
+                taskNetworkRepository.editTask(task)
+                taskDatabaseRepository.editTask(task)
+                addEditTaskStatus = TaskOperationStatus.SUCCESS
+            } catch (e: Exception) {
+                addEditTaskStatus = TaskOperationStatus.ERROR
+            }
         }
     }
 

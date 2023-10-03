@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -141,6 +142,8 @@ class HomeActivity : ComponentActivity() {
 */
     @Composable
     fun TaskListView() {
+        val context = LocalContext.current
+
         Column(modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(
                 text = "Task list",
@@ -155,7 +158,12 @@ class HomeActivity : ComponentActivity() {
                 items(items = taskViewModel.taskList) { task ->
                     Card(
                         colors = CardDefaults.cardColors(containerColor = task.colorType.color),
-                        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
+                        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp),
+                        modifier = Modifier.clickable {
+                            val intent = Intent(context, TaskActivity::class.java)
+                            intent.putExtra("edit_task", task)
+                            startActivity(intent)
+                        }
                     ) {
                         Row() {
                             Column(modifier = Modifier

@@ -46,14 +46,17 @@ class TaskActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val editTask: Task? = intent.getSerializableExtra("edit_task") as? Task
+
         setContent {
-            TaskView()
+            TaskView(editTask)
             observeAddTaskStatus()
         }
     }
 
     private fun observeAddTaskStatus() {
-        when (taskViewModel.addTaskStatus) {
+        when (taskViewModel.addEditTaskStatus) {
             TaskOperationStatus.SUCCESS -> {
                 val intent = Intent(this, HomeActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
@@ -68,13 +71,15 @@ class TaskActivity : ComponentActivity() {
     }
 
     @Composable
-    fun TaskView() {
+    fun TaskView(editTask: Task?) {
         val context = LocalContext.current
         val taskColors = ColorType.values()
 
-        var currentColor by rememberSaveable { mutableStateOf(taskColors.first()) }
-        var titleText by rememberSaveable { mutableStateOf("") }
-        var descriptionText by rememberSaveable { mutableStateOf("") }
+        var currentColor by rememberSaveable {
+            mutableStateOf(editTask?.colorType ?: taskColors.first())
+        }
+        var titleText by rememberSaveable { mutableStateOf(editTask?.title ?: "") }
+        var descriptionText by rememberSaveable { mutableStateOf(editTask?.description ?: "") }
         
         Column(
             modifier = Modifier.padding(20.dp)
@@ -127,22 +132,24 @@ class TaskActivity : ComponentActivity() {
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    val task = Task(
-                        title = titleText,
-                        description = descriptionText,
-                        colorType = currentColor
-                    )
-
-//                    val intent = Intent(context, HomeActivity::class.java)
-//                    intent.putExtra("task", task)
-//                    startActivity(intent)
-//
-//                    finish()
-
-                    taskViewModel.addTask(task)
+                    if (editTask == null) {
+                        val task = Task(
+                            title = titleText,
+                            description = descriptionText,
+                            colorType = currentColor
+                        )
+                        taskViewModel.addTask(task)
+                    } else {
+                        val task = editTask.copy(
+                            title = titleText,
+                            description = descriptionText,
+                            colorType = currentColor
+                        )
+                        taskViewModel.editTask(task)
+                    }
                 }
             ) {
-                if (taskViewModel.addTaskStatus == TaskOperationStatus.LOADING) {
+                if (taskViewModel.addEditTaskStatus == TaskOperationStatus.LOADING) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
                 } else {
                     Text(text = "Save")
