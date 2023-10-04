@@ -19,21 +19,31 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.outlined.Email
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -76,6 +86,10 @@ class HomeActivity : ComponentActivity() {
             //HomeText(welcomeValue)
             HomeView()
             observeGetAllTasksStatus()
+
+            if (taskViewModel.sendSmsTaskStatus != null) {
+                SendSmsAlertDialog()
+            }
         }
     }
 
@@ -141,6 +155,42 @@ class HomeActivity : ComponentActivity() {
     }
 */
     @Composable
+    fun SendSmsAlertDialog() {
+        var phoneNumber by rememberSaveable { mutableStateOf("") }
+        var textToSend = "${taskViewModel.sendSmsTaskStatus?.title}\n${taskViewModel.sendSmsTaskStatus?.description}"
+
+        AlertDialog(
+            onDismissRequest = { taskViewModel.sendSmsTaskStatus = null },
+            dismissButton = {
+                TextButton(onClick = { taskViewModel.sendSmsTaskStatus = null }) {
+                    Text(text = "Cancel")
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { taskViewModel.sendSmsTaskStatus = null }) {
+                    Text(text = "Send")
+                }
+            },
+            title = {
+                Text(text = "Send SMS")
+            },
+            text = {
+                Column() {
+                    Text(text = "Content:", fontWeight = FontWeight.Bold)
+                    Text(text = textToSend)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = phoneNumber,
+                        onValueChange = { phoneNumber = it },
+                        label = { Text(text = "Phone number") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
+                    )
+                }
+            }
+        )
+    }
+
+    @Composable
     fun TaskListView() {
         val context = LocalContext.current
 
@@ -152,7 +202,12 @@ class HomeActivity : ComponentActivity() {
             )
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
+                contentPadding = PaddingValues(
+                    top = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp,
+                    bottom = 64.dp
+                ),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(items = taskViewModel.taskList) { task ->
@@ -190,6 +245,16 @@ class HomeActivity : ComponentActivity() {
                                     Icon(
                                         imageVector = Icons.Default.Close,
                                         contentDescription = "delete task"
+                                    )
+                                }
+                                Spacer(modifier = Modifier.height(16.dp))
+                                IconButton(
+                                    onClick = { taskViewModel.sendSmsTaskStatus = task },
+                                    modifier = Modifier.size(25.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Email,
+                                        contentDescription = "send sms"
                                     )
                                 }
                             }

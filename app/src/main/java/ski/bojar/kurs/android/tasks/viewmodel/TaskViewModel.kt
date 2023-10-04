@@ -20,6 +20,7 @@ class TaskViewModel(
     var taskList by mutableStateOf(emptyList<Task>())
     var addEditTaskStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
     var getAllTasksStatus by mutableStateOf(TaskOperationStatus.UNKNOWN)
+    var sendSmsTaskStatus by mutableStateOf<Task?>(null)
 
     //var titleText by mutableStateOf("")
 
