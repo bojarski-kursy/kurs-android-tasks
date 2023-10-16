@@ -94,13 +94,41 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import ski.bojar.kurs.android.tasks.ui.theme.TasksTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            //MyHomeActivityView()
-            MyExerciseActivityView()
+            TasksTheme() {
+                Surface() {
+                    Column() {
+                        Text(text = "Text color")
+                        Text(text = "Text")
+                        Icon(imageVector = Icons.Default.Add, contentDescription = "")
+                        Button(onClick = { /*TODO*/ }) {
+                            Text(text = "Button")
+                        }
+                        FloatingActionButton(onClick = { /*TODO*/ }) {
+                            Text(text = "FAB")
+                        }
+                        TextField(value = "TextField", onValueChange = { })
+                        Spacer(modifier = Modifier.height(10.dp))
+                        OutlinedTextField(value = "OutlinedTextField", onValueChange = {})
+                        OutlinedTextField(value = "", onValueChange = {}, label = { Text("label") })
+
+                        Checkbox(checked = false, onCheckedChange = {})
+                        Checkbox(checked = true, onCheckedChange = {})
+                        CircularProgressIndicator()
+                        LinearProgressIndicator()
+                        Switch(checked = false, onCheckedChange = {})
+                        Switch(checked = true, onCheckedChange = {})
+                        Divider()
+                        Card() { Text("Card") }
+                        Surface() { Text("Surface") }
+                    }
+                }
+            }
         }
     }
 
