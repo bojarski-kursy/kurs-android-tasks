@@ -1,7 +1,9 @@
 package ski.bojar.kurs.android.tasks.view
 
+import android.Manifest.permission.SEND_SMS
 import android.content.Intent
 import android.os.Bundle
+import android.telephony.SmsManager
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -46,6 +48,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
 import ski.bojar.kurs.android.tasks.viewmodel.TaskViewModel
@@ -154,10 +159,12 @@ class HomeActivity : ComponentActivity() {
         }
     }
 */
+    @OptIn(ExperimentalPermissionsApi::class)
     @Composable
     fun SendSmsAlertDialog() {
         var phoneNumber by rememberSaveable { mutableStateOf("") }
         var textToSend = "${taskViewModel.sendSmsTaskStatus?.title}\n${taskViewModel.sendSmsTaskStatus?.description}"
+        val sendSmsPermission = rememberPermissionState(permission = SEND_SMS)
 
         AlertDialog(
             onDismissRequest = { taskViewModel.sendSmsTaskStatus = null },
@@ -167,8 +174,24 @@ class HomeActivity : ComponentActivity() {
                 }
             },
             confirmButton = {
-                TextButton(onClick = { taskViewModel.sendSmsTaskStatus = null }) {
-                    Text(text = "Send")
+                if (sendSmsPermission.status.isGranted) {
+                    TextButton(
+                        onClick = {
+                            taskViewModel.sendSmsTaskStatus = null
+
+                            val smsManager: SmsManager =
+                                this.getSystemService(SmsManager::class.java)
+                            smsManager.sendTextMessage(phoneNumber, null, textToSend, null, null)
+                            Toast.makeText(this, "SMS sent to $phoneNumber", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    ) {
+                        Text(text = "Send")
+                    }
+                } else {
+                    TextButton(onClick = { sendSmsPermission.launchPermissionRequest() }) {
+                        Text(text = "Permission")
+                    }
                 }
             },
             title = {

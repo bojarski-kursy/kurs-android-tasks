@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "ski.bojar.kurs.android.tasks"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "ski.bojar.kurs.android.tasks"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -79,4 +79,6 @@ dependencies {
     implementation("androidx.room:room-ktx:$room_version")
 
     implementation("io.insert-koin:koin-android:3.4.3")
+
+    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
 }
