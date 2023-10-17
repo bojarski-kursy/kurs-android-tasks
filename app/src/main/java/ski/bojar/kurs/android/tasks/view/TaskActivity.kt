@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -34,11 +35,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ski.bojar.kurs.android.tasks.R
 import ski.bojar.kurs.android.tasks.model.ColorType
 import ski.bojar.kurs.android.tasks.model.Task
 import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
@@ -59,13 +63,14 @@ class TaskActivity : ComponentActivity() {
             TasksTheme() {
                 Surface(Modifier.fillMaxSize()) {
                     TaskView(editTask)
-                    observeAddTaskStatus()
+                    ObserveAddTaskStatus()
                 }
             }
         }
     }
 
-    private fun observeAddTaskStatus() {
+    @Composable
+    private fun ObserveAddTaskStatus() {
         when (taskViewModel.addEditTaskStatus) {
             TaskOperationStatus.SUCCESS -> {
                 val intent = Intent(this, HomeActivity::class.java)
@@ -74,7 +79,11 @@ class TaskActivity : ComponentActivity() {
                 finish()
             }
             TaskOperationStatus.ERROR -> {
-                Toast.makeText(this, "Conection problem. Try again.", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this, 
+                    stringResource(id = R.string.info_connection_problem),
+                    Toast.LENGTH_LONG
+                ).show()
             }
             TaskOperationStatus.LOADING, TaskOperationStatus.UNKNOWN -> {}
         }
@@ -94,7 +103,7 @@ class TaskActivity : ComponentActivity() {
         Column(
             modifier = Modifier.padding(20.dp)
         ) {
-            Text(text = "Task", fontSize = 30.sp)
+            Text(text = stringResource(id = R.string.task), fontSize = 30.sp)
             Spacer(modifier = Modifier.height(20.dp))
             Card(
                 colors = CardDefaults.cardColors(containerColor = currentColor.color),
@@ -113,7 +122,7 @@ class TaskActivity : ComponentActivity() {
                 OutlinedTextField(
                     value = titleText, // taskViewModel.titleText
                     onValueChange = { titleText = it }, // taskViewModel.titleText
-                    label = { Text(text = "Title") },
+                    label = { Text(text = stringResource(id = R.string.title)) },
                     textStyle = outlinedTextStyle,
                     colors = outlinedTextFieldColors,
                     modifier = Modifier
@@ -123,7 +132,7 @@ class TaskActivity : ComponentActivity() {
                 OutlinedTextField(
                     value = descriptionText,
                     onValueChange = { descriptionText = it },
-                    label = { Text(text = "Description") },
+                    label = { Text(text = stringResource(id = R.string.description)) },
                     textStyle = outlinedTextStyle,
                     colors = outlinedTextFieldColors,
                     modifier = Modifier
@@ -175,9 +184,13 @@ class TaskActivity : ComponentActivity() {
                 if (taskViewModel.addEditTaskStatus == TaskOperationStatus.LOADING) {
                     CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
                 } else {
-                    Text(text = "Save")
+                    Text(text = stringResource(id = R.string.save))
                 }
             }
+
+            Image(painter = painterResource(R.drawable.task_image), contentDescription = null)
+//            val imageUrl = "https://img.freepik.com/free-vector/completed-concept-illustration_114360-2945.jpg?w=1060&t=st=1697552718~exp=1697553318~hmac=f1595f7825b495b957044cc380da3f31f35e34027d9df8be610168ea15a2d42c"
+//            AsyncImage(model = imageUrl, contentDescription = null)
         }
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zadania</string>
+
+    <string name="info_loading_tasks_from_storage">Zadania załadowane z lokalnej pamięci</string>
+    <string name="cancel">Anuluj</string>
+    <string name="info_sms_sent">Wysłano SMSa do %s</string>
+    <string name="send">Wyślij</string>
+    <string name="permission">Zezwolenie</string>
+    <string name="send_sms">Wyślij SMSa</string>
+    <string name="content">Zawartość:</string>
+    <string name="phone_number">Numer telefonu</string>
+    <string name="task_list">Lista zadań</string>
+    <string name="empty_task_list">Pusta lista zadań</string>
+    <string name="info_connection_problem">Problem z połączeniem. Spróbuj ponownie.</string>
+    <string name="task">Zadanie</string>
+    <string name="title">Tytuł</string>
+    <string name="description">Opis</string>
+    <string name="save">Zapisz</string>
+
+</resources>

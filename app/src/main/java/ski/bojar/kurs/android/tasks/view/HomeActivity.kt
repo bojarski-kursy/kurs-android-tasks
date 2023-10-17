@@ -46,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -54,6 +55,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import ski.bojar.kurs.android.tasks.R
 import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
 import ski.bojar.kurs.android.tasks.ui.theme.TasksTheme
 import ski.bojar.kurs.android.tasks.viewmodel.TaskViewModel
@@ -95,7 +97,7 @@ class HomeActivity : ComponentActivity() {
                 Surface() {
                     //HomeText(welcomeValue)
                     HomeView()
-                    observeGetAllTasksStatus()
+                    ObserveGetAllTasksStatus()
 
                     if (taskViewModel.sendSmsTaskStatus != null) {
                         SendSmsAlertDialog()
@@ -111,9 +113,14 @@ class HomeActivity : ComponentActivity() {
         taskViewModel.getAllTasks()
     }
 
-    private fun observeGetAllTasksStatus() {
+    @Composable
+    private fun ObserveGetAllTasksStatus() {
         if (taskViewModel.getAllTasksStatus == TaskOperationStatus.ERROR) {
-            Toast.makeText(this, "Tasks loaded from local storage", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                stringResource(R.string.info_loading_tasks_from_storage),
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
@@ -177,11 +184,12 @@ class HomeActivity : ComponentActivity() {
             onDismissRequest = { taskViewModel.sendSmsTaskStatus = null },
             dismissButton = {
                 TextButton(onClick = { taskViewModel.sendSmsTaskStatus = null }) {
-                    Text(text = "Cancel")
+                    Text(text = stringResource(id = R.string.cancel))
                 }
             },
             confirmButton = {
                 if (sendSmsPermission.status.isGranted) {
+                    val textInfoSmsSent = stringResource(id = R.string.info_sms_sent, phoneNumber)
                     TextButton(
                         onClick = {
                             taskViewModel.sendSmsTaskStatus = null
@@ -189,30 +197,30 @@ class HomeActivity : ComponentActivity() {
                             val smsManager: SmsManager =
                                 this.getSystemService(SmsManager::class.java)
                             smsManager.sendTextMessage(phoneNumber, null, textToSend, null, null)
-                            Toast.makeText(this, "SMS sent to $phoneNumber", Toast.LENGTH_LONG)
+                            Toast.makeText(this, textInfoSmsSent, Toast.LENGTH_LONG)
                                 .show()
                         }
                     ) {
-                        Text(text = "Send")
+                        Text(text = stringResource(id = R.string.send))
                     }
                 } else {
                     TextButton(onClick = { sendSmsPermission.launchPermissionRequest() }) {
-                        Text(text = "Permission")
+                        Text(text = stringResource(id = R.string.permission))
                     }
                 }
             },
             title = {
-                Text(text = "Send SMS")
+                Text(text = stringResource(id = R.string.send_sms))
             },
             text = {
                 Column() {
-                    Text(text = "Content:", fontWeight = FontWeight.Bold)
+                    Text(text = stringResource(id = R.string.content), fontWeight = FontWeight.Bold)
                     Text(text = textToSend)
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(
                         value = phoneNumber,
                         onValueChange = { phoneNumber = it },
-                        label = { Text(text = "Phone number") },
+                        label = { Text(text = stringResource(id = R.string.phone_number)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
                     )
                 }
@@ -226,7 +234,7 @@ class HomeActivity : ComponentActivity() {
 
         Column(modifier = Modifier.padding(horizontal = 20.dp)) {
             Text(
-                text = "Task list",
+                text = stringResource(id = R.string.task_list),
                 fontSize = 30.sp,
                 modifier = Modifier.padding(top = 20.dp)
             )
@@ -310,7 +318,7 @@ class HomeActivity : ComponentActivity() {
                 TaskOperationStatus.SUCCESS, TaskOperationStatus.ERROR -> {
                     if (taskViewModel.taskList.isEmpty()) {
                         Text(
-                            text = "Empty task list",
+                            text = stringResource(id = R.string.empty_task_list),
                             fontSize = 20.sp,
                             modifier = Modifier.align(Alignment.Center)
                         )

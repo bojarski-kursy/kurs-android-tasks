@@ -81,4 +81,6 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.4.3")
 
     implementation("com.google.accompanist:accompanist-permissions:0.32.0")
+
+    implementation("io.coil-kt:coil-compose:2.3.0")
 }

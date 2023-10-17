@@ -3,4 +3,20 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_my_exercise">MyExerciseActivity</string>
     <string name="title_activity_task">TaskActivity</string>
+
+    <string name="info_loading_tasks_from_storage">Tasks loaded from local storage</string>
+    <string name="cancel">Cancel</string>
+    <string name="info_sms_sent">SMS sent to %s</string>
+    <string name="send">Send</string>
+    <string name="permission">Permission</string>
+    <string name="send_sms">Send SMS</string>
+    <string name="content">Content:</string>
+    <string name="phone_number">Phone number</string>
+    <string name="task_list">Task list</string>
+    <string name="empty_task_list">Empty task list</string>
+    <string name="info_connection_problem">Connection problem. Try again.</string>
+    <string name="task">Task</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="save">Save</string>
 </resources>
