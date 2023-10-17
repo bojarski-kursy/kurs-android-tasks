@@ -4,6 +4,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.JsonClass
+import ski.bojar.kurs.android.tasks.ui.theme.CardGreen
+import ski.bojar.kurs.android.tasks.ui.theme.CardRed
+import ski.bojar.kurs.android.tasks.ui.theme.CardYellow
 import java.io.Serializable
 import java.util.UUID
 
@@ -17,7 +20,7 @@ data class Task(
 ) : Serializable
 
 enum class ColorType(val color: Color) {
-    GREEN(Color.Cyan),
-    YELLOW(Color.Yellow),
-    RED(Color.Magenta)
+    GREEN(CardGreen),
+    YELLOW(CardYellow),
+    RED(CardRed)
 }

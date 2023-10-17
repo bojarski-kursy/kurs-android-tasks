@@ -34,6 +34,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -43,6 +44,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -53,6 +55,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
+import ski.bojar.kurs.android.tasks.ui.theme.TasksTheme
 import ski.bojar.kurs.android.tasks.viewmodel.TaskViewModel
 
 //var taskList = mutableListOf<Task>()
@@ -88,12 +91,16 @@ class HomeActivity : ComponentActivity() {
         */
 
         setContent {
-            //HomeText(welcomeValue)
-            HomeView()
-            observeGetAllTasksStatus()
+            TasksTheme() {
+                Surface() {
+                    //HomeText(welcomeValue)
+                    HomeView()
+                    observeGetAllTasksStatus()
 
-            if (taskViewModel.sendSmsTaskStatus != null) {
-                SendSmsAlertDialog()
+                    if (taskViewModel.sendSmsTaskStatus != null) {
+                        SendSmsAlertDialog()
+                    }
+                }
             }
         }
     }
@@ -251,11 +258,13 @@ class HomeActivity : ComponentActivity() {
                                 Text(
                                     text = task.title,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 20.sp
+                                    fontSize = 20.sp,
+                                    color = Color.DarkGray
                                 )
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
-                                    text = task.description
+                                    text = task.description,
+                                    color = Color.DarkGray
                                 )
                             }
                             Column(
@@ -263,11 +272,12 @@ class HomeActivity : ComponentActivity() {
                             ) {
                                 IconButton(
                                     onClick = { taskViewModel.deleteTask(task) },
-                                    modifier = Modifier.size(25.dp)
+                                    modifier = Modifier.size(25.dp),
                                 ) {
                                     Icon(
                                         imageVector = Icons.Default.Close,
-                                        contentDescription = "delete task"
+                                        contentDescription = "delete task",
+                                        tint = Color.DarkGray
                                     )
                                 }
                                 Spacer(modifier = Modifier.height(16.dp))
@@ -277,7 +287,8 @@ class HomeActivity : ComponentActivity() {
                                 ) {
                                     Icon(
                                         imageVector = Icons.Outlined.Email,
-                                        contentDescription = "send sms"
+                                        contentDescription = "send sms",
+                                        tint = Color.DarkGray
                                     )
                                 }
                             }

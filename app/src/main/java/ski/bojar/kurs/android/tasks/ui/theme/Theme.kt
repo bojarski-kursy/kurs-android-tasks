@@ -7,30 +7,31 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    surface = Color.DarkGray,
-    onSurface = Color.White
+    primary = LightBlue,
+    primaryContainer = Blue,
+    surface = DarkSurface
 )
 
 private val LightColorScheme = lightColorScheme(
+//    primary = Blue,
+//    onPrimary = LightGreen,
+//    primaryContainer = Color.Red,
+//    onPrimaryContainer = Color.Yellow,
+//    surface = Color.Yellow,
+//    onSurface = Color.Magenta,
+//    surfaceVariant = Color.DarkGray,
+//    onSurfaceVariant = Color.Green,
+//    outline = Color.Red,
+//    outlineVariant = Orange
+
     primary = Blue,
-    onPrimary = LightGreen,
-    primaryContainer = Color.Red,
-    onPrimaryContainer = Color.Yellow,
-    surface = Color.Yellow,
-    onSurface = Color.Magenta,
-    surfaceVariant = Color.DarkGray,
-    onSurfaceVariant = Color.Green,
-    outline = Color.Red,
-    outlineVariant = Orange
+    primaryContainer = LightBlue,
+    surface = LightSurface
 )
 
 @Composable
@@ -48,8 +49,8 @@ fun TasksTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            window.statusBarColor = colorScheme.surface.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 

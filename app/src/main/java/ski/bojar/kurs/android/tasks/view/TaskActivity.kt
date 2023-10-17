@@ -6,8 +6,10 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,6 +23,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,6 +42,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ski.bojar.kurs.android.tasks.model.ColorType
 import ski.bojar.kurs.android.tasks.model.Task
 import ski.bojar.kurs.android.tasks.model.TaskOperationStatus
+import ski.bojar.kurs.android.tasks.ui.theme.Blue
+import ski.bojar.kurs.android.tasks.ui.theme.TasksTheme
 import ski.bojar.kurs.android.tasks.viewmodel.TaskViewModel
 
 class TaskActivity : ComponentActivity() {
@@ -50,8 +56,12 @@ class TaskActivity : ComponentActivity() {
         val editTask: Task? = intent.getSerializableExtra("edit_task") as? Task
 
         setContent {
-            TaskView(editTask)
-            observeAddTaskStatus()
+            TasksTheme() {
+                Surface(Modifier.fillMaxSize()) {
+                    TaskView(editTask)
+                    observeAddTaskStatus()
+                }
+            }
         }
     }
 
@@ -90,11 +100,22 @@ class TaskActivity : ComponentActivity() {
                 colors = CardDefaults.cardColors(containerColor = currentColor.color),
                 elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp)
             ) {
+                val outlinedTextStyle = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.DarkGray
+                )
+                val outlinedTextFieldColors = OutlinedTextFieldDefaults.colors(
+                    focusedLabelColor = Blue,
+                    unfocusedLabelColor = Color.Gray
+                )
+
                 OutlinedTextField(
                     value = titleText, // taskViewModel.titleText
                     onValueChange = { titleText = it }, // taskViewModel.titleText
                     label = { Text(text = "Title") },
-                    textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
+                    textStyle = outlinedTextStyle,
+                    colors = outlinedTextFieldColors,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -103,7 +124,8 @@ class TaskActivity : ComponentActivity() {
                     value = descriptionText,
                     onValueChange = { descriptionText = it },
                     label = { Text(text = "Description") },
-                    textStyle = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
+                    textStyle = outlinedTextStyle,
+                    colors = outlinedTextFieldColors,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
@@ -112,6 +134,7 @@ class TaskActivity : ComponentActivity() {
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            val selectedButtonBorderColor = if (isSystemInDarkTheme()) Color.White else Color.Gray
             LazyRow() {
                 items(items = taskColors) { colorType ->
                     Button(
@@ -119,7 +142,7 @@ class TaskActivity : ComponentActivity() {
                         shape = CircleShape,
                         colors = ButtonDefaults.buttonColors(containerColor = colorType.color),
                         elevation = ButtonDefaults.elevatedButtonElevation(defaultElevation = 8.dp),
-                        border = BorderStroke(2.dp, if (currentColor == colorType) Color.Gray else colorType.color),
+                        border = BorderStroke(2.dp, if (currentColor == colorType) selectedButtonBorderColor else colorType.color),
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .size(40.dp)

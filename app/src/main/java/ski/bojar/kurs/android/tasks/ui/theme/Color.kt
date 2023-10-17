@@ -15,3 +15,11 @@ val LightGreen = Color(0xFF90ee90)
 val DarkGreen = Color(0xFF47741b)
 val Brown = Color(0xFF995407)
 val Orange = Color(0xFFffa500)
+
+val CardGreen = Color(0xFFB5EAD6)
+val CardRed = Color(0xFFFFB8B1)
+val CardYellow = Color(0xFFF6EAC2)
+
+val LightBlue = Color(0xFF80bdff)
+val LightSurface = Color.White
+val DarkSurface = Color(0xFF181c2c)
